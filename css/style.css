@@ -1,0 +1,345 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+    background-color: white;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    align-items: stretch;
+    gap: 5px;
+    padding: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+}
+
+header, footer {
+    background-color: #a0c4ff;
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
+}
+
+header {
+    color: white;
+    border-bottom: 1px solid #ccc;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.header-block {
+    display: flex;
+    align-items: center;
+}
+
+.separador {
+    width: 1px;
+    background-color: white;
+    height: 100%;
+    margin: 0 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.logo .UCV {
+    font-size: 0.7em;
+}
+
+.search-form input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.search-form button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    color: black;
+    cursor: pointer;
+}
+
+/* Grid principal */
+section {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+section ul li {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    color: #7b9acd;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    word-break: break-word;
+    min-height: 300px;
+}
+
+section ul li img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain; 
+    margin-bottom: 10px;
+    aspect-ratio: unset;
+    border-radius: 5px;    
+    padding: 5px;
+}
+
+section ul li:hover {
+    transform: scale(1.05) rotate(5deg);
+    background-color: #99c5dd;
+}
+
+section ul li:focus {
+    background-color: #ffd700;
+    outline: 2px solid #ffa500;
+}
+
+.perfil-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+}
+
+.foto {
+    flex: 1 0 300px;        
+}
+
+.foto img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-top-left-radius: 40px;
+    height: 100%; 
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.info-perfil {
+    flex: 2 1 600px;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 4px 8px 16px black;
+    background-color: white;
+}
+
+.nombre-perfil {
+    font-size: 1.5em;
+    color: orange;
+}
+
+.descripcion-perfil {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.gustos-perfil p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.contacto-email a {
+    color: orange;
+    text-decoration: none;
+}
+
+.contacto-email a:hover {
+    text-decoration: underline;
+}
+
+.contacto-email a:visited {
+    color: red;
+}
+
+footer {
+    color: black;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+}
+
+@media (max-width: 480px) {
+
+    section ul {
+        grid-template-columns: 1fr;
+    }
+    
+    header nav {
+        justify-content: center;
+        height: auto;
+    }
+
+    .perfil-container {
+        flex-direction: column;
+    }
+    
+    .foto {
+        flex: 0 0 100%;
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    .foto img {
+        content: url('../29966562/CEDULAPequena.jpg');
+    }
+    
+    .logo {
+        font-size: 1.5em;
+    }
+    
+    .separador {
+        display: none;
+    }
+    
+    .search-form {
+        width: 100%;
+        order: 3;
+    }
+    
+    .search-form input[type="text"] {
+        width: 70%;
+    }    
+
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    section ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    section ul li img {
+        height: 200px;
+        max-width: 90%;
+    }
+    
+    header nav {
+        justify-content: center;
+        height: auto;
+    }
+
+    .perfil-container {
+        flex-wrap: wrap;
+    }
+    
+    .foto {
+        flex: 1 0 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .foto img {
+        content: url('../29966562/CEDULAPequena.jpg');
+    }
+
+    .separador {
+        display: block;
+        margin: 0 10px;
+    }
+    
+    .logo {
+        font-size: 1.8em;
+        flex-shrink: 1;
+    }
+    
+    .nav-name {
+        font-size: 0.9em;
+    }
+    
+    .search-form {
+        min-width: 250px;
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    header nav {        
+        display: flex;
+        align-items: center;
+        justify-content: space-between;        
+        padding: 5px 0;
+    }
+
+    .separador {
+        margin: 0 8px; 
+    }
+
+    .logo {
+        font-size: 1.75em;
+        flex-shrink: 1;
+    }
+
+    .nav-name {
+        font-size: 1em; /* Reducir tamaño del nombre */
+        white-space: nowrap;
+    }
+
+    .search-form {
+        flex: 1;
+        min-width: 200px;
+        max-width: 300px; 
+    }
+
+    .search-form input[type="text"] {
+        width: 65%; 
+        padding: 4px;
+    }
+
+    .search-form button {
+        padding: 4px 8px;
+        font-size: 0.9em;
+    }
+
+    section ul {
+        grid-template-columns: repeat(3, 1fr);
+    }     
+  
+}
+
+@media (min-width: 1025px) {
+
+    section ul {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .container {
+        max-width: 1200px;
+    }
+}
