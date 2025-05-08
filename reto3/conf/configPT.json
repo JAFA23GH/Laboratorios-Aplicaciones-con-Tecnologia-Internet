@@ -1,4 +1,4 @@
-const config = {
+{
 	"sitio": ["ATI","[UCV]","2024-1"],
 	"home": "Início",
 	"login": "Sessão",
@@ -9,7 +9,7 @@ const config = {
 	"libro":"Meu livro favorito é",
 	"musica":"Meu estilo de música favorita",
 	"video_juego":"Jogos de vídeo favoritos",
-	"lenguajes":"Linguagems aprendidas",
+	"lenguagens":"Linguagems aprendidas",
 	"email":"Se precisar me contatar pode me escrever em [email]",
 	"buscar": "Procurar",
 	"saludo": "Olá"

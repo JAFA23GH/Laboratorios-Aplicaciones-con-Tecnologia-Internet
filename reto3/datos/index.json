@@ -1,4 +1,4 @@
-const perfiles = [
+[
     {
         "nombre": "Juan Fernandes",
         "descripción": "Soy estudiante de Computación de la UCV, estoy en el 7mo-8vo semestre de la carrera. Nacido en Caracas, me gustan los deportes, a veces dibujo y ya no tengo muchas más cosas interesantes que decir de mí así que acá viene un pequeño Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -30,7 +30,7 @@ const perfiles = [
     {
         "ci": "14444733",
         "imagen": "14444733\/14444733.jpg",
-        "nombre": "Mar\u00eda Paula Herrero"
+        "nombre": "María Paula Herrero"
     },
     {
         "ci": "18443368",
@@ -90,7 +90,7 @@ const perfiles = [
     {
         "ci": "18002106",
         "imagen": "18002106\/18002106.jpg",
-        "nombre": "Abelardo Jos\u00e9 Moreno Carballeda"
+        "nombre": "Abelardo José Moreno Carballeda"
     },
     {
         "ci": "19379860",

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
+    <title id="perfilPageTitle">Juan Fernandes</title>
+    <link rel="stylesheet" href="css/style.css"> </head>
+<body>
+
+    <div class="container">
+
+        <div class="foto">
+            <picture>
+                <source media="(max-width:768px)" id="perfil-img-small" srcset="">
+                <source media="(min-width:769px)" id="perfil-img-large" srcset="">
+                <img id="perfil-img-default" src="images/default_profile.png" alt="Foto de perfil"> </picture>
+        </div>
+
+        <div class="info-perfil">
+
+            <div class="nombre-perfil"><h1 id="perfil-nombre"></h1></div>
+
+            <div class="descripcion-perfil">
+                <p id="perfil-descripcion"></p>
+            </div>
+
+            <div class="gustos-perfil">
+                <p>Mi color favorito es: <span id="perfil-color"></span></p>
+                <p>Mi libro favorito es: <span id="perfil-libro"></span></p>
+                <p>Estilo de música preferida es: <span id="perfil-musica"></span></p>
+                <p>Mis Videojuegos favoritos son: <span id="perfil-videojuego"></span></p>
+                <p><strong>Lenguajes aprendidos: <span id="perfil-lenguajes"></span></strong></p>
+                <p>CI: <span id="perfil-ci"></span></p>
+                <p>Género: <span id="perfil-genero"></span></p>
+                <p>Fecha de Nacimiento: <span id="perfil-fecha-nacimiento"></span></p>
+            </div>
+
+            <div class="contacto-email">
+                <p>Si necesitan comunicarse conmigo me pueden escribir a: <a id="perfil-email" href=""></a></p>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="js/perfil-loader.js" defer></script>
+</body>
+</html>
