@@ -10,7 +10,9 @@
         "email": "jalffernandesucv@gmail.com",
         "CI": "29966562",
         "género": "masculino",
-        "fecha_nacimiento": "2002-10-23"
+        "fecha_nacimiento": "2002-10-23",
+        "imagen_grande": "29966562\/CEDULAGrande.jpg",
+        "imagen_pequena": "29966562\/CEDULAPequena.jpg"
     },
     {
         "ci": "19371273",
