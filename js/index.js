@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', async function() {
-  //Cargar configuración de idioma
+  // ---------------------------
+  // Cargar configuración de idioma
+  // ---------------------------
   const urlParams = new URLSearchParams(window.location.search);
-  let langParam = urlParams.get('lang');
+  // Se busca el parámetro "lang". Si no existe, se revisa "ilang".
+  let langParam = urlParams.get('lang') || urlParams.get('ilang');
   const lang = langParam ? langParam.toUpperCase() : 'ES';
   const configUrl = `conf/config${lang}.json`;
   let config = {};
@@ -12,13 +15,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       throw new Error(`Error cargando ${configUrl}: ${response.statusText}`);
     config = await response.json();
 
-    //Actualizar elementos en index.html
-   
+    // Actualizar elementos en index.html 
+    
     const welcomeMessageContainer = document.getElementById("welcomeMessageContainer");
     if (welcomeMessageContainer && config.saludo) {
       welcomeMessageContainer.innerText = config.saludo;
     }    
-   
+    
     const headerTitle = document.getElementById("headerTitle");
     if (headerTitle && config.sitio && Array.isArray(config.sitio)) {
       headerTitle.innerHTML = config.sitio.join(" ");
@@ -46,22 +49,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       document.title = newTitle;
     }
     
-    //Actualizar elementos en perfil.html
-    
+    // Actualizar elementos en perfil.html
     const gustosContainer = document.querySelector(".gustos-perfil");
     if (gustosContainer) {
       const paragraphs = gustosContainer.querySelectorAll("p");
-      
+   
       if (paragraphs.length >= 5) {
         paragraphs[0].innerHTML = `${config.color}: <span id="perfil-color">${document.getElementById("perfil-color")?.innerText || ""}</span>`;
         paragraphs[1].innerHTML = `${config.libro}: <span id="perfil-libro">${document.getElementById("perfil-libro")?.innerText || ""}</span>`;
         paragraphs[2].innerHTML = `${config.musica}: <span id="perfil-musica">${document.getElementById("perfil-musica")?.innerText || ""}</span>`;
         paragraphs[3].innerHTML = `${config.video_juego}: <span id="perfil-videojuego">${document.getElementById("perfil-videojuego")?.innerText || ""}</span>`;
-        
         const languageLabel = config.lenguages || config.lenguajes || "Lenguajes aprendidos";
         paragraphs[4].innerHTML = `<strong>${languageLabel}: <span id="perfil-lenguajes">${document.getElementById("perfil-lenguajes")?.innerText || ""}</span></strong>`;
       }
-    }    
+    }
    
     const emailContainer = document.querySelector(".contacto-email p");
     if (emailContainer && config.email) {
@@ -77,45 +78,72 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.error("Fallo al cargar la configuración:", error);
   }
 
-  //Listado de estudiantes en index.html
-
+  // ---------------------------
+  // Código para el listado y búsqueda de estudiantes en index.html
+  // ---------------------------
   if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
     try {
       const response = await fetch("datos/index.json");
       const perfiles = await response.json();
-      const placeholder = document.querySelector("#student-list");
-      let out = "";
+      
+      let allStudents = perfiles;
 
-      perfiles.forEach(function(perfil, index) {
-        if (index !== 0) {
-          out += `
-            <li>
-              <img src="${perfil.imagen}" alt="${perfil.nombre}">
-              ${perfil.nombre}
-            </li>
-          `;
+      const renderStudents = function(list) {
+        const ul = document.querySelector("#student-list");
+        let out = "";
+        list.forEach(function(perfil, index) {
+          if (index !== 0) {
+            out += `
+              <li>
+                <img src="${perfil.imagen}" alt="${perfil.nombre}">
+                ${perfil.nombre}
+              </li>
+            `;
+          } else {
+            out += `
+              <li>
+                <picture>
+                  <source media="(max-width:768px)" srcset="${perfil.imagen_pequena}">
+                  <source media="(min-width:769px)" srcset="${perfil.imagen_grande}">   
+                  <img src="${perfil.imagen_grande}" alt="Foto de perfil">             
+                </picture>
+                ${perfil.nombre}
+              </li>
+            `;
+          }
+        });
+        if (ul) ul.innerHTML = out;
+      };
+
+      renderStudents(allStudents);
+
+      // Agregar funcionalidad de búsqueda
+      const searchInput = document.getElementById("searchPlaceholder");
+      const sectionContainer = document.querySelector("section");
+      searchInput.addEventListener("input", function() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query === "") {
+          sectionContainer.innerHTML = "<ul id='student-list'></ul>";
+          renderStudents(allStudents);
+          return;
+        }
+        let filtered = allStudents.filter(p => p.nombre.toLowerCase().includes(query));
+        if (filtered.length === 0) {
+          const noResultMsg = (config.no_alumnos || "No hay alumnos que tengan en su nombre:") + " " + query;
+          sectionContainer.innerHTML = `<div style="font-size:2em; text-align:center; color:#99c5dd; margin-top:2em;">${noResultMsg}</div>`;;
         } else {
-          out += `
-            <li>
-              <picture>
-                <source media="(max-width:768px)" srcset="${perfil.imagen_pequena}">
-                <source media="(min-width:769px)" srcset="${perfil.imagen_grande}">   
-                <img src="${perfil.imagen_grande}" alt="Foto de perfil">             
-              </picture>
-              ${perfil.nombre}
-            </li>
-          `;
+          sectionContainer.innerHTML = "<ul id='student-list'></ul>";
+          renderStudents(filtered);
         }
       });
-
-      if (placeholder) placeholder.innerHTML = out;
     } catch (error) {
       console.error("Error al cargar los perfiles:", error);
     }
   }
 
-  //Perfil en perfil.html
-
+  // ---------------------------
+  // Código para el perfil en perfil.html
+  // ---------------------------
   if (window.location.pathname.endsWith('perfil.html')) {
     const urlParamsPerfil = new URLSearchParams(window.location.search);
     const profileId = urlParamsPerfil.get('id');
