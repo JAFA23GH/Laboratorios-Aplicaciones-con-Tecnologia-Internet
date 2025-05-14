@@ -1,0 +1,22 @@
+      perfiles.forEach(function(perfil, index) {
+          if (index !== 0) {
+              out += `
+                  <li>
+                      <img src="${perfil.imagen}" alt="${perfil.nombre}">
+                      ${perfil.nombre}
+                  </li>
+              `;
+             
+          } else {
+             out += `
+                <li>
+                <picture>
+                    <source media="(max-width:768px)" srcset=${perfil.imagen_pequena}>
+                    <source media="(min-width:769px)" srcset=${perfil.imagen_grande}>   
+                    <img src=${perfil.imagen_grande} alt="Foto de perfil">             
+                </picture>  
+                ${perfil.nombre}
+                </li>
+              `;
+          }
+      });
