@@ -1,13 +1,13 @@
 {
     "nombre": "Juan Fernandes",
-    "descripción": "Soy estudiante de Computación de la UCV, estoy en el 7mo-8vo semestre de la carrera. Nacido en Caracas, me gustan los deportes, a veces dibujo y ya no tengo muchas más cosas interesantes que decir de mí así que acá viene un pequeño Lorem Ipsum: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "descripcion": "Soy estudiante de Computación de la UCV, estoy en el 7mo-8vo semestre de la carrera. Nacido en Caracas, me gustan los deportes, las películas y a veces dibujo.",
     "color": "Rojo",
     "libro": "1984",
-    "música": "Hip-Hop",
+    "musica": "Hip-Hop",
     "video_juego": "Saga de Batman Arkham",
-    "lenguajes": "C++, Python, Prolog, HTML",
+    "lenguajes": ["C++, Python, Prolog, HTML"],
     "email": "jalffernandesucv@gmail.com",
     "CI": "29966562",
-    "género": "masculino",
+    "genero": "masculino",
     "fecha_nacimiento": "2002-10-23"
 }

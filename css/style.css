@@ -137,6 +137,13 @@ section ul li:focus {
     width: 100%;
 }
 
+.perfil-link {
+  display: block;
+  text-align: center;
+  text-decoration: none; 
+  color: inherit; 
+}
+
 .foto {
     flex: 1 0 300px;        
 }

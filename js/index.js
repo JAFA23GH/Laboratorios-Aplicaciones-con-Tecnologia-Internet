@@ -91,26 +91,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       const renderStudents = function(list) {
         const ul = document.querySelector("#student-list");
         let out = "";
-        list.forEach(function(perfil, index) {
-          if (index !== 0) {
+        list.forEach(function(perfil, index) {         
             out += `
-              <li>
-                <img src="${perfil.imagen}" alt="${perfil.nombre}">
-                ${perfil.nombre}
+              <li class="perfil">
+                <a href="perfil.html?id=${perfil.ci}" class="perfil-link">
+                  <img src="${perfil.imagen}" alt="${perfil.nombre}">
+                  <p>${perfil.nombre}</p>
+                </a>
               </li>
-            `;
-          } else {
-            out += `
-              <li>
-                <picture>
-                  <source media="(max-width:768px)" srcset="${perfil.imagen_pequena}">
-                  <source media="(min-width:769px)" srcset="${perfil.imagen_grande}">   
-                  <img src="${perfil.imagen_grande}" alt="Foto de perfil">             
-                </picture>
-                ${perfil.nombre}
-              </li>
-            `;
-          }
+            `;          
         });
         if (ul) ul.innerHTML = out;
       };
@@ -148,17 +137,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     const urlParamsPerfil = new URLSearchParams(window.location.search);
     const profileId = urlParamsPerfil.get('id');
 
+    // Función auxiliar que intenta cargar la imagen en distintos formatos:
+    async function cargarImagen(id) {
+      const extensiones = ['jpg', 'JPG', 'png', 'PNG'];
+      for (const ext of extensiones) {
+        const url = `${id}/${id}.${ext}`;
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+          return url; // Retorna la URL si se encuentra la imagen
+        }
+      }
+      throw new Error('Imagen no encontrada en formato jpg o png');
+    }
+
     try {
-      const response = await fetch("datos/index.json");
-      const profiles = await response.json();
-      const profile = profiles.find(p => p.ci === profileId);
+      const response = await fetch(`${profileId}/perfil.json`);
+      const profile = await response.json();      
       if (!profile) throw new Error('Perfil no encontrado');
 
       document.getElementById('perfil-nombre').textContent = profile.nombre;
-      document.getElementById('perfil-descripcion').textContent = profile.descripción;
+      document.getElementById('perfil-descripcion').textContent = profile.descripcion;        
       document.getElementById('perfil-color').textContent = profile.color;
       document.getElementById('perfil-libro').textContent = profile.libro;
-      document.getElementById('perfil-musica').textContent = profile.música;
+      document.getElementById('perfil-musica').textContent = profile.musica;
       document.getElementById('perfil-videojuego').textContent = profile.video_juego;
       document.getElementById('perfil-lenguajes').textContent = profile.lenguajes ? profile.lenguajes.join(', ') : "";
 
@@ -169,7 +170,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       } else {
         console.error("No se encontró el elemento con id 'perfil-email'");
       }
-      document.getElementById('perfil-img-default').src = profile.imagen;
+
+      // Manejo de la imagen con múltiples formatos
+      try {
+        const imageUrl = await cargarImagen(profileId);
+        document.getElementById('perfil-img-default').src = imageUrl;
+      } catch (imgError) {
+        console.error("Error cargando imagen:", imgError);
+        // Imagen de respaldo si no se encuentra alguna de las opciones
+        document.getElementById('perfil-img-default').src = "default.jpg";
+      }
 
       document.title = `${profile.nombre} | Perfil`;
     } catch (error) {
