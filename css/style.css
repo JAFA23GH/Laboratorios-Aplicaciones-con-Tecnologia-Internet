@@ -107,7 +107,7 @@ section ul li {
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease;
     word-break: break-word;
-    min-height: 300px;
+    min-height: 300px;  
 }
 
 section ul li img {
@@ -115,7 +115,6 @@ section ul li img {
     height: 250px;
     object-fit: contain; 
     margin-bottom: 10px;
-    aspect-ratio: unset;
     border-radius: 5px;    
     padding: 5px;
 }
@@ -150,10 +149,9 @@ section ul li:focus {
 
 .foto img {
     max-width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     border-top-left-radius: 40px;
-    height: 100%; 
     object-fit: cover; 
     object-position: center; 
 }
@@ -221,11 +219,7 @@ footer {
         flex: 0 0 100%;
         max-width: 100%;
         border-radius: 20px;
-    }
-
-    .foto img {
-        content: url('../29966562/CEDULAPequena.jpg');
-    }
+    }  
     
     .logo {
         font-size: 1.5em;
@@ -270,10 +264,6 @@ footer {
         flex: 1 0 100%;
         max-width: 100%;
         text-align: center;
-    }
-
-    .foto img {
-        content: url('../29966562/CEDULAPequena.jpg');
     }
 
     .separador {

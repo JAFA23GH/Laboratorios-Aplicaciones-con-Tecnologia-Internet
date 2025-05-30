@@ -138,13 +138,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     const profileId = urlParamsPerfil.get('id');
 
     // Función auxiliar que intenta cargar la imagen en distintos formatos:
-    async function cargarImagen(id) {
+    async function cargarImagen(id) {    
       const extensiones = ['jpg', 'JPG', 'png', 'PNG'];
       for (const ext of extensiones) {
         const url = `${id}/${id}.${ext}`;
         const response = await fetch(url, { method: 'HEAD' });
         if (response.ok) {
-          return url; // Retorna la URL si se encuentra la imagen
+          return url; 
         }
       }
       throw new Error('Imagen no encontrada en formato jpg o png');
