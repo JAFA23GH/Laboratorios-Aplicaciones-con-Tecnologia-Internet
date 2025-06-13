@@ -5,7 +5,6 @@ import json
 import uuid
 from http import cookies
 
-# Indica al navegador que el contenido es HTML
 print("Content-Type: text/html")
 
 # Manejo de cookies para la sesión
@@ -16,7 +15,6 @@ if "sessionId" not in cookie:
 else:
     session_id = cookie["sessionId"].value
 
-# Línea en blanco obligatoria entre headers y contenido
 print()
 
 # Procesa parámetros de la URL, por ejemplo para seleccionar el idioma
@@ -24,7 +22,6 @@ form = cgi.FieldStorage()
 lang = form.getvalue("lang", "es")  # Por defecto en español
 
 # Carga dinámica de la configuración según el idioma
-# Se asume que tienes archivos: conf/configES.json y conf/configEN.json, por ejemplo.
 config_path = f"/var/www/ATI/conf/config{lang.upper()}.json"
 if not os.path.exists(config_path):
     config_path = "/var/www/ATI/conf/configES.json"  # Valor por defecto
@@ -32,7 +29,7 @@ if not os.path.exists(config_path):
 with open(config_path, "r", encoding="utf-8") as config_file:
     config = json.load(config_file)
 
-# Genera el HTML de la página, tomando como base tu index.html
+# HTML de la página
 html = f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>

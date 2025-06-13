@@ -3,11 +3,10 @@ import cgi
 import os
 import json
 
-# Imprime el header necesario para CGI
 print("Content-Type: text/html")
 print()
 
-# Obtiene el parámetro 'student_id' de la URL (por ejemplo, ?student_id=19932730)
+# Obtiene el parámetro 'student_id' de la URL
 form = cgi.FieldStorage()
 student_id = form.getvalue("student_id")
 
@@ -30,18 +29,16 @@ with open(json_path, "r", encoding="utf-8") as f:
 
 # Determina la imagen del perfil.
 imagen = perfil.get("imagen")
-if not imagen:
-    # Si el JSON no especifica la imagen, busca algún archivo .jpg o .png en el directorio
+if not imagen:    
     for archivo in os.listdir(profile_dir):
         if archivo.lower().endswith((".jpg", ".png")):
             imagen = archivo
             break
 
 # Define la ruta pública donde se servirán las imágenes.
-# Se asume que las imágenes se han movido (o se han copiado) a la carpeta /ATI/static/perfiles/
 imagen_url = f"/ATI/static/perfiles/{imagen}" if imagen else ""
 
-# Genera el HTML del perfil usando los datos
+# Genera el HTML del perfil
 html = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
