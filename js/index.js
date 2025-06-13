@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function cargarImagen(id) {    
       const extensiones = ['jpg', 'JPG', 'png', 'PNG'];
       for (const ext of extensiones) {
-        const url = `${id}/${id}.${ext}`;
+        const url = `perfiles/${id}/${id}.${ext}`;
         const response = await fetch(url, { method: 'HEAD' });
         if (response.ok) {
           return url; 
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     try {
-      const response = await fetch(`${profileId}/perfil.json`);
+      const response = await fetch(`perfiles/${profileId}/perfil.json`);
       const profile = await response.json();      
       if (!profile) throw new Error('Perfil no encontrado');
 
