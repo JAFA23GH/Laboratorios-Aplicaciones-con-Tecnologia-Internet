@@ -5,7 +5,10 @@ import json
 import uuid
 from http import cookies
 
-print("Content-Type: text/html")
+form = cgi.FieldStorage()
+lang = form.getvalue("lang", "es")
+config_json = form.getvalue("config")
+list_json = form.getvalue("list")
 
 # Manejo de cookies para la sesión
 cookie = cookies.SimpleCookie(os.environ.get("HTTP_COOKIE"))
@@ -15,59 +18,55 @@ if "sessionId" not in cookie:
 else:
     session_id = cookie["sessionId"].value
 
-print()
-
-# Procesa parámetros de la URL, por ejemplo para seleccionar el idioma
-form = cgi.FieldStorage()
-lang = form.getvalue("lang", "es")  # Por defecto en español
-
-# Carga dinámica de la configuración según el idioma
-config_path = f"/var/www/ATI/conf/config{lang.upper()}.json"
+# Configuración de idioma
+config_path = f"/var/www/html/ATI/static/conf/config{lang.upper()}.json"
 if not os.path.exists(config_path):
-    config_path = "/var/www/ATI/conf/configES.json"  # Valor por defecto
-
+    config_path = "/var/www/html/ATI/static/conf/configES.json"
 with open(config_path, "r", encoding="utf-8") as config_file:
     config = json.load(config_file)
 
-# HTML de la página
-html = f"""<!DOCTYPE html>
+# config como JSON (AJAX)
+if config_json:
+    print("Content-Type: application/json\n")
+    print(json.dumps(config))
+    exit()
+
+# Lista de estudiantes como JSON (AJAX)
+if list_json:
+    perfiles_dir = "/var/www/html/ATI/static/perfiles"
+    estudiantes = []
+    if os.path.exists(perfiles_dir):
+        for nombre in os.listdir(perfiles_dir):
+            perfil_path = os.path.join(perfiles_dir, nombre, "perfil.json")
+            if os.path.exists(perfil_path):
+                with open(perfil_path, "r", encoding="utf-8") as f:
+                    perfil = json.load(f)
+                    # Devuelve la ruta accesible desde el navegador
+                    imagen = perfil.get("imagen", "")
+                    imagen_url = f"/ATI/static/perfiles/{nombre}/{imagen}" if imagen else ""
+                    estudiantes.append({
+                        "id": nombre,
+                        "nombre": perfil.get("nombre", ""),
+                        "imagen": imagen_url
+                    })
+    print("Content-Type: application/json\n")
+    print(json.dumps(estudiantes))
+    exit()
+
+# HTML principal
+print("Content-Type: text/html\n")
+print(f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/ATI/static/images/favicon.ico" type="image/x-icon">
     <title id="pageTitle">{config.get('titulo', 'ATI[UCV] 2024-1')}</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preload" href="conf/configES.json" as="fetch" crossorigin>
-    <script src="js/index.js" defer></script>    
+    <link rel="stylesheet" href="/ATI/static/css/style.css">
+    <script src="/ATI/static/js/index.js" defer></script>
 </head>
 <body>
-
-    <header class="header-block">
-        <nav>
-            <div class="header-block logo" id="headerTitle">{config.get('logoText', '')}</div>
-            <div class="separador"></div>
-            <div class="header-block nav-name" id="welcomeMessageContainer">{config.get('welcomeMessage', '')}</div>
-            <div class="separador"></div>
-            <div class="header-block search-form">
-                <input type="text" class="search-input" id="searchPlaceholder" placeholder="Nombre...">
-                <button type="submit" class="search-button" id="searchButtonText">{config.get('searchButton', 'Buscar')}</button>
-            </div>
-        </nav>
-    </header>
-
-    <section>
-        <ul id="student-list">
-            <!-- La lista de estudiantes se cargará aquí dinámicamente -->
-        </ul>
-    </section>
-
-    <footer id="footerText">
-        {config.get('footer', 'Copyright © 2025 Escuela de computación - ATI. Todos los derechos reservados')}
-    </footer>
-
+    <div id="app"></div>
 </body>
 </html>
-"""
-
-print(html)
+""")
